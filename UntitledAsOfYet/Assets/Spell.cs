@@ -17,7 +17,7 @@ public class Spell : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void FixedUpdate (float elapsed) {
+	void FixedUpdate () {
 		
 	}
 }
