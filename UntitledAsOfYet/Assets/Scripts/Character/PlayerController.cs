@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : Character {
-    
+public class PlayerController : Character
+{
+    // My Class and Race
+    public PlayableClass myClass;
 
     public override void Start()
     {
@@ -13,5 +15,15 @@ public class PlayerController : Character {
     public override void Update()
     {
         base.Update();
+    }
+
+    protected override void LoadMyAttributes()
+    {
+        baseAttributes = ClassData.PlayableClasses[myClass].baseAttributes;
+    }
+
+    protected override void LoadMySpells()
+    {
+        mySpells = ClassData.PlayableClasses[myClass].Spells;
     }
 }

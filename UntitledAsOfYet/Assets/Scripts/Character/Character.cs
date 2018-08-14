@@ -5,19 +5,19 @@ using UnityEngine;
 
 public class Character : MonoBehaviour, IDamageable<float>
 {
-    // My Class and Race
-    public IPlayableClass myClass;
-
+    // Spells
+    protected IList<Spell> mySpells;
 
     // Attributes
-    private IDictionary<AttributeType, float> baseAttributes; // Character Base Attributes
+    protected IDictionary<AttributeType, float> baseAttributes; // Character Base Attributes
     public IDictionary<AttributeType, float> attributes; // Character Current Attributes
     private IDictionary<AttributeType, float> attribPercMods; // Percent Modifier for each Attribute
     public List<AttribModifier> attribModifiers; // List of Attribute Modifiers
 
     public virtual void Start()
     {
-        baseAttributes = myClass.GetBaseAttributes();
+        LoadMyAttributes();
+        LoadMySpells();
     }
 
     public virtual void Update()
@@ -55,5 +55,17 @@ public class Character : MonoBehaviour, IDamageable<float>
         {
             attributes[key] *= attribPercMods[key];
         }
+    }
+
+    protected virtual void LoadMySpells()
+    {
+        // Default load no spells
+        mySpells = new List<Spell>();
+    }
+
+    protected virtual void LoadMyAttributes()
+    {
+        // Default load no attributes
+        baseAttributes = new Dictionary<AttributeType, float>();
     }
 }
