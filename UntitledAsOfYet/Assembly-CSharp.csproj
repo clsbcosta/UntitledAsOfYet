@@ -56,7 +56,6 @@
      <Compile Include="Assets\Scripts\Character\AttributeStructures.cs" />
      <Compile Include="Assets\Scripts\Character\Character.cs" />
      <Compile Include="Assets\Scripts\Character\Classes\PlayableClass.cs" />
-     <Compile Include="Assets\Scripts\Character\Classes\Sorcerer.cs" />
      <Compile Include="Assets\Scripts\Character\NPCController.cs" />
      <Compile Include="Assets\Scripts\Character\PlayerController.cs" />
      <Compile Include="Assets\Scripts\Interfaces\IDamageable.cs" />

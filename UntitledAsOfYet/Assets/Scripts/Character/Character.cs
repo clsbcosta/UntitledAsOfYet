@@ -12,12 +12,20 @@ public class Character : MonoBehaviour, IDamageable<float>
     protected IDictionary<AttributeType, float> baseAttributes; // Character Base Attributes
     public IDictionary<AttributeType, float> attributes; // Character Current Attributes
     private IDictionary<AttributeType, float> attribPercMods; // Percent Modifier for each Attribute
-    public List<AttribModifier> attribModifiers; // List of Attribute Modifiers
+    public List<AttribModifier> attribModifiers = new List<AttribModifier>(); // List of Attribute Modifiers
+
+    // Vectors
+    
+
+    // Components
+    protected Rigidbody myRigidBody;
 
     public virtual void Start()
     {
+        myRigidBody = GetComponent<Rigidbody>();
         LoadMyAttributes();
         LoadMySpells();
+        CalculateAttributes();
     }
 
     public virtual void Update()
