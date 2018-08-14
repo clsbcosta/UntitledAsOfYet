@@ -10,6 +10,7 @@ public class Character : MonoBehaviour, IDamageable<float>
 
     // Attributes
     protected IDictionary<AttributeType, float> baseAttributes; // Character Base Attributes
+    protected IDictionary<AttributeType, float> baseAttribPercMods; // Character Base Perc Mods
     public IDictionary<AttributeType, float> attributes; // Character Current Attributes
     private IDictionary<AttributeType, float> attribPercMods; // Percent Modifier for each Attribute
     public List<AttribModifier> attribModifiers = new List<AttribModifier>(); // List of Attribute Modifiers
@@ -42,21 +43,13 @@ public class Character : MonoBehaviour, IDamageable<float>
     // Recalculate Attributes based on Base Attributes and Attribute Modifiers
     private void CalculateAttributes()
     {
-        attributes = baseAttributes;
-        attribPercMods = new Dictionary<AttributeType, float>()
-        {
-            { AttributeType.Health, 1 }, {AttributeType.HealthRegen, 1 },
-            { AttributeType.Mana, 1 }, {AttributeType.ManaRegen, 1 },
-            { AttributeType.MagCritChance, 1 }, { AttributeType.MagCritMult, 1 },
-            { AttributeType.PhysCritChance, 1 }, { AttributeType.PhysCritMult, 1 },
-            { AttributeType.MoveSpeed, 1 }, { AttributeType.Armor, 1 },
-            { AttributeType.PhysResist, 1 }, { AttributeType.MagResist, 1 }
-        };
+        attributes = new Dictionary<AttributeType, float>(baseAttributes);
+        attribPercMods = new Dictionary<AttributeType, float>(baseAttribPercMods);
         // Add flat attribute increases and percentage attribute inceases
         foreach (AttribModifier attribMod in attribModifiers)
         {
             attributes[attribMod.attribute] += attribMod.flatMod;
-            attribPercMods[attribMod.attribute] += attribMod.percMod;
+            attribPercMods[attribMod.attribute] *= 1+attribMod.percMod;
         }
         // Apply percentage modifiers
         foreach (AttributeType key in Enum.GetValues(typeof(AttributeType)))
@@ -75,5 +68,6 @@ public class Character : MonoBehaviour, IDamageable<float>
     {
         // Default load no attributes
         baseAttributes = new Dictionary<AttributeType, float>();
+        baseAttribPercMods = new Dictionary<AttributeType, float>();
     }
 }

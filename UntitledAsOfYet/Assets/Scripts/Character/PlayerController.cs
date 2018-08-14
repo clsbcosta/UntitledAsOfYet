@@ -50,7 +50,8 @@ public class PlayerController : Character
 
     protected override void LoadMyAttributes()
     {
-        baseAttributes = ClassData.PlayableClasses[myClass].baseAttributes;
+        //baseAttributes = // Set base attributes from race
+        baseAttribPercMods  = ClassData.PlayableClasses[myClass].baseAttributes; // Set base attribute percentage modifiers from class
     }
 
     protected override void LoadMySpells()
