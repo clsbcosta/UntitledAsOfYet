@@ -35,17 +35,17 @@ public class PlayerController : Character
         }
         else if (inputForward < 0)
         {
-            moveDirection = Vector3.back * attributes[AttributeType.MoveSpeed];
+            moveDirection = Vector3.back;
         }
         if (inputSide > 0)
         {
-            moveDirection = Quaternion.AngleAxis(Mathf.Deg2Rad * 90, Vector3.up) * moveDirection;
+            moveDirection = moveDirection + Vector3.right;
         }
         else if (inputSide < 0)
         {
-            moveDirection = Quaternion.AngleAxis(Mathf.Deg2Rad * -90, Vector3.up) * moveDirection;
+            moveDirection = moveDirection + Vector3.left;
         }
-        transform.position = transform.position + moveDirection * attributes[AttributeType.MoveSpeed] * Time.deltaTime * 0.001f;
+        transform.position = transform.position + moveDirection.normalized * attributes[AttributeType.MoveSpeed] * Time.deltaTime * 0.001f;
     }
 
     protected override void LoadMyAttributes()
