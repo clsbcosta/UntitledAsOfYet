@@ -9,72 +9,58 @@ public enum PlayableRace
 
 public static class RaceData
 {
+    // Create Race:
+    //  PlayableRaceData Parameters:
+    //      Spell List,
+    //      Health, HealthRegen, Mana, ManaRegen,
+    //      MagCritChance, MagCritMult, PhysCritChance, PhysCritMult,
+    //      MoveSpeed, Armor, PhysResist, MagResist
+    // Numbers are flat increases
     public static IDictionary<PlayableRace, PlayableRaceData> PlayableRaces = new Dictionary<PlayableRace, PlayableRaceData>()
     {
         {
             PlayableRace.Human, new PlayableRaceData(
-                new Dictionary<AttributeType, float>()
-                {
-                    { AttributeType.Health, 1 }, {AttributeType.HealthRegen, 1 },
-                    { AttributeType.Mana, 1 }, {AttributeType.ManaRegen, 1 },
-                    { AttributeType.MagCritChance, 1 }, { AttributeType.MagCritMult, 1 },
-                    { AttributeType.PhysCritChance, 1 }, { AttributeType.PhysCritMult, 1 },
-                    { AttributeType.MoveSpeed, 1 }, { AttributeType.Armor, 1 },
-                    { AttributeType.PhysResist, 1 }, { AttributeType.MagResist, 1 }
-                },
-                new List<Spell>() { })
+                new List<Spell>() { },
+                10, 10, 10, 10,
+                10, 10, 10, 10,
+                10, 10, 10, 10)
             },
         {
             PlayableRace.Dwarf, new PlayableRaceData(
-                new Dictionary<AttributeType, float>()
-                {
-                    { AttributeType.Health, 1 }, {AttributeType.HealthRegen, 1 },
-                    { AttributeType.Mana, 1 }, {AttributeType.ManaRegen, 1 },
-                    { AttributeType.MagCritChance, 1 }, { AttributeType.MagCritMult, 1 },
-                    { AttributeType.PhysCritChance, 1 }, { AttributeType.PhysCritMult, 1 },
-                    { AttributeType.MoveSpeed, 1 }, { AttributeType.Armor, 1 },
-                    { AttributeType.PhysResist, 1 }, { AttributeType.MagResist, 1 }
-                },
-                new List<Spell>() { })
+                new List<Spell>() { },
+                10, 10, 10, 10,
+                10, 10, 10, 10,
+                10, 10, 10, 10)
             },
         {
             PlayableRace.Undead, new PlayableRaceData(
-                new Dictionary<AttributeType, float>()
-                {
-                    { AttributeType.Health, 1 }, {AttributeType.HealthRegen, 1 },
-                    { AttributeType.Mana, 1 }, {AttributeType.ManaRegen, 1 },
-                    { AttributeType.MagCritChance, 1 }, { AttributeType.MagCritMult, 1 },
-                    { AttributeType.PhysCritChance, 1 }, { AttributeType.PhysCritMult, 1 },
-                    { AttributeType.MoveSpeed, 1 }, { AttributeType.Armor, 1 },
-                    { AttributeType.PhysResist, 1 }, { AttributeType.MagResist, 1 }
-                },
-                new List<Spell>() { })
+                new List<Spell>() { },
+                10, 10, 10, 10,
+                10, 10, 10, 10,
+                10, 10, 10, 10)
             },
         {
             PlayableRace.Orc, new PlayableRaceData(
-                new Dictionary<AttributeType, float>()
-                {
-                    { AttributeType.Health, 1 }, {AttributeType.HealthRegen, 1 },
-                    { AttributeType.Mana, 1 }, {AttributeType.ManaRegen, 1 },
-                    { AttributeType.MagCritChance, 1 }, { AttributeType.MagCritMult, 1 },
-                    { AttributeType.PhysCritChance, 1 }, { AttributeType.PhysCritMult, 1 },
-                    { AttributeType.MoveSpeed, 1 }, { AttributeType.Armor, 1 },
-                    { AttributeType.PhysResist, 1 }, { AttributeType.MagResist, 1 }
-                },
-                new List<Spell>() { })
+                new List<Spell>() { },
+                10, 10, 10, 10,
+                10, 10, 10, 10,
+                10, 10, 10, 10)
             }
     };
-
 }
 
 
 public struct PlayableRaceData
 {
-    public IDictionary<AttributeType, float> baseAttributes;
+    public float[] baseAttributes;
     public IList<Spell> Spells;
-    public PlayableRaceData(Dictionary<AttributeType, float> baseAttributes, List<Spell> Spells)
+    public PlayableRaceData(List<Spell> Spells, float Health, float HealthRegen, float Mana, float ManaRegen,
+        float MagCritChance, float MagCritMult, float PhysCritChance, float PhysCritMult,
+        float MoveSpeed, float Armor, float PhysResist, float MagResist)
     {
-        this.baseAttributes = baseAttributes;
+        baseAttributes = new float[]{ Health, HealthRegen, Mana, ManaRegen,
+            MagCritChance, MagCritMult, PhysCritChance, PhysCritMult,
+            MoveSpeed, Armor, PhysResist, MagResist };
         this.Spells = Spells;
     }
 }

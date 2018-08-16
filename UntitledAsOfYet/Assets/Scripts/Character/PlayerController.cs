@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class PlayerController : Character
 {
@@ -8,14 +9,24 @@ public class PlayerController : Character
     public PlayableClass myClass;
     public PlayableRace myRace;
 
+    // Camera Settings
+    private Transform head;
+    public Ray lookRay;
+    public Vector3 lookPoint;
+    private Vector3 camLockDirection;
+
     public override void Start()
     {
+        head = transform.Find("Head");
         base.Start();
     }
 
     public override void Update()
     {
-        CheckInputs();
+        if (isLocalPlayer)
+        {
+            CheckInputs();
+        }
         base.Update();
     }
 
@@ -23,30 +34,37 @@ public class PlayerController : Character
     {
         // Check movement keys
         CheckMovementInputs();
+        CheckMouseLook();
     }
 
     private void CheckMovementInputs()
     {
+        Vector3 moveDirection = Vector3.zero;
         float inputForward = Input.GetAxis("Vertical");
         float inputSide = Input.GetAxis("Horizontal");
-        Vector3 moveDirection = Vector3.zero;
-        if (inputForward > 0)
-        {
-            moveDirection = Vector3.forward;
-        }
-        else if (inputForward < 0)
-        {
-            moveDirection = Vector3.back;
-        }
-        if (inputSide > 0)
-        {
-            moveDirection = moveDirection + Vector3.right;
-        }
-        else if (inputSide < 0)
-        {
-            moveDirection = moveDirection + Vector3.left;
-        }
-        transform.position = transform.position + moveDirection.normalized * attributes[AttributeType.MoveSpeed] * Time.deltaTime * 0.001f;
+        moveDirection += (inputForward * transform.forward).normalized;
+        moveDirection += (inputSide * transform.right).normalized;
+        // Have to implement movespeed attrib modifier
+        transform.position += moveDirection * 0.1f;
+    }
+
+    private void CheckMouseLook()
+    {
+        Ray camRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hitInfo;
+        lookPoint = Physics.Raycast(camRay, out hitInfo, 100) ? hitInfo.point : camRay.GetPoint(25);
+        lookRay = new Ray(head.position, lookPoint - head.position);
+        Debug.DrawLine(head.position, lookPoint, Color.blue);
+    }
+
+    public void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red; Gizmos.DrawSphere(lookPoint, 0.1f);
+    }
+
+    private void SyncWithServer()
+    {
+
     }
 
     protected override void LoadMyAttributes()
