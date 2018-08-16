@@ -17,6 +17,10 @@ public class PlayerController : Character
 
     public override void Start()
     {
+        if (isLocalPlayer)
+        {
+            transform.Find("Camera").gameObject.SetActive(true);
+        }
         head = transform.Find("Head");
         base.Start();
     }
