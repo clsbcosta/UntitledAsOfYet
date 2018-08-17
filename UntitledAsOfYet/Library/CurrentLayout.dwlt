@@ -108,7 +108,7 @@ MonoBehaviour:
   m_MinSize: {x: 683, y: 492}
   m_MaxSize: {x: 12008, y: 14042}
   vertical: 0
-  controlID: 107
+  controlID: 94
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -132,7 +132,7 @@ MonoBehaviour:
   m_MinSize: {x: 683, y: 492}
   m_MaxSize: {x: 12008, y: 14042}
   vertical: 1
-  controlID: 108
+  controlID: 95
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -157,7 +157,7 @@ MonoBehaviour:
   m_MinSize: {x: 683, y: 221}
   m_MaxSize: {x: 12008, y: 4021}
   vertical: 0
-  controlID: 109
+  controlID: 96
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -176,8 +176,8 @@ MonoBehaviour:
     y: 0
     width: 204
     height: 454
-  m_MinSize: {x: 202, y: 221}
-  m_MaxSize: {x: 4002, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 13}
   m_Panes:
   - {fileID: 13}
@@ -324,9 +324,9 @@ MonoBehaviour:
   m_PersistentViewDataDictionary: {fileID: 0}
   m_TreeViewState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 
+    m_SelectedIDs: 7e090000
     m_LastClickedID: 0
-    m_ExpandedIDs: a815d6ffd615d6ff4a3fd6ff985fd6ffc65fd6ffa002d7ffeccddeffa8faffff00000000
+    m_ExpandedIDs: e6fbffff00000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -413,7 +413,7 @@ MonoBehaviour:
   m_Rotation:
     m_Target: {x: -0.27013874, y: 0.5700041, z: -0.1983963, w: -0.7501728}
     speed: 2
-    m_Value: {x: -0.27013877, y: 0.57000417, z: -0.19839631, w: -0.75017285}
+    m_Value: {x: -0.2701387, y: 0.5700041, z: -0.1983963, w: -0.7501728}
   m_Size:
     m_Target: 231.34064
     speed: 2
@@ -646,20 +646,20 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Resources/StatusEffects
+    - Assets/Resources
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Resources/StatusEffects
+  - Assets/Resources
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\Nicholas Fan\Documents\GitHub\UntitledAsOfYet\UntitledAsOfYet
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 17}
-    m_SelectedIDs: 7a2d0000
-    m_LastClickedID: 11642
-    m_ExpandedIDs: 000000003c2a00008c2a0000ea2b0000742d000000ca9a3b
+    m_SelectedIDs: 7e090000
+    m_LastClickedID: 2430
+    m_ExpandedIDs: 000000005c0900007e090000ae0900001e0b000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -687,7 +687,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 000000003c2a00008c2a0000ea2b0000
+    m_ExpandedIDs: 000000005c0900007e090000ae0900001e0b0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 

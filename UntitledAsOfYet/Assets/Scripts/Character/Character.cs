@@ -160,7 +160,11 @@ public class Character : NetworkBehaviour
     [ClientRpc]
     public void RpcRemoveStatusEffect(string name)
     {
-        StatusEffectLocation.Find(name).SendMessage("RemoveEffect");
+        Transform target = StatusEffectLocation.Find(name + "Clone");
+        if (target != null)
+        {
+            target.SendMessage("RemoveEffect");
+        }
     }
 
     [ClientRpc]
