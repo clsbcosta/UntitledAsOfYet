@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class Character : NetworkBehaviour, IDamageable<float>
+public class Character : NetworkBehaviour
 {
     // Debug
-    public bool syncAttributes = false;
+    public bool test;
 
     // Spells
     protected IList<Spell> mySpells;
@@ -16,16 +16,29 @@ public class Character : NetworkBehaviour, IDamageable<float>
     protected float[] baseAttributes; // Character Base Attributes
     protected float[] baseAttribPercMods; // Character Base Perc Mods
     
-    
-    [HideInInspector] public float[] attributes; // Character Current Attributes
+    public float[] attributes; // Character Current Attributes
     private float[] attribPercMods; // Percent Modifier for each Attribute
+    [HideInInspector]
     public List<AttribModifier> attribModifiers = new List<AttribModifier>(); // List of Attribute Modifiers
 
-    // Vectors
-    
+    // Current Health Mana
+    [SyncVar]
+    public float health;
+    [SyncVar]
+    public float mana;
+
+    // Look Vectors
+    public Ray lookRay;
+
+    // Time keeping
+    private float elapsed;
+
+    // Regen Settings
+    private float regenInterval = 1;
 
     // Components
     protected Rigidbody myRigidBody;
+    public Transform StatusEffectLocation;
 
     public virtual void Start()
     {
@@ -33,28 +46,50 @@ public class Character : NetworkBehaviour, IDamageable<float>
         LoadMyAttributes();
         LoadMySpells();
         CalculateAttributes();
+        ResetHealthMana();
+    }
+
+    private void Test()
+    {
+        test = false;
+        RpcApplyEffect("MajorHealth", 10);
     }
 
     public virtual void Update()
     {
-        if (syncAttributes)
+        // Server Calculations
+        if (isServer)
         {
-            syncAttributes = false;
-            CalculateAttributes();
+            CheckHealthManaRegen();
         }
-
-        //CalculateAttributes();
+        if (test) Test();
     }
 
     // Take Damage Interface
-    public void Damage(float damageTaken)
+    [Server]
+    public void Damage(float damage, DamageType damageType)
     {
-        throw new NotImplementedException();
+        switch (damageType)
+        {
+            case DamageType.Heal:
+                health += damage;
+                CheckHealthCap();
+                break;
+            case DamageType.UnBlockable:
+                health -= damage;
+                break;
+            case DamageType.Magical:
+                health -= damage;
+                break;
+            case DamageType.Physical:
+                health -= damage;
+                break;
+        }
     }
 
     // Recalculate Attributes based on Base Attributes and Attribute Modifiers
     [Server]
-    private void CalculateAttributes()
+    public void CalculateAttributes()
     {
         attributes = (float[])baseAttributes.Clone();
         attribPercMods = (float[])baseAttribPercMods.Clone();
@@ -89,5 +124,59 @@ public class Character : NetworkBehaviour, IDamageable<float>
         // Default load no attributes
         baseAttributes = new float[Enum.GetValues(typeof(AttributeType)).Length];
         baseAttribPercMods = new float[Enum.GetValues(typeof(AttributeType)).Length];
+    }
+
+    private void CheckHealthManaRegen()
+    {
+        elapsed += Time.deltaTime;
+        if (elapsed >= regenInterval)
+        {
+            elapsed -= regenInterval;
+            health += attributes[(int)AttributeType.HealthRegen] * regenInterval; // Apply Regen
+            mana += attributes[(int)AttributeType.ManaRegen] * regenInterval;
+            CheckHealthCap();
+            CheckManaCap();
+        }
+    }
+
+    private void CheckManaCap()
+    {
+        if (mana > attributes[(int)AttributeType.Mana])
+            mana = attributes[(int)AttributeType.Mana];
+    }
+
+    private void CheckHealthCap()
+    {
+        if (health > attributes[(int)AttributeType.Health])
+            health = attributes[(int)AttributeType.Health];
+    }
+
+    private void ResetHealthMana()
+    {
+        health = attributes[(int)AttributeType.Health];
+        mana = attributes[(int)AttributeType.Mana];
+    }
+
+    [ClientRpc]
+    public void RpcRemoveStatusEffect(string name)
+    {
+        StatusEffectLocation.Find(name).SendMessage("RemoveEffect");
+    }
+
+    [ClientRpc]
+    public void RpcApplyEffect(string name, float duration)
+    {
+        GameObject newEffect;
+        Transform search = StatusEffectLocation.Find(name + "(Clone)");
+        // Search for clone of statuseffect prefab in StatusEffectLocation
+        if (search == null)
+            // If none then create effect
+            newEffect = Instantiate(Resources.Load("StatusEffects/" + name),
+                Vector3.zero, Quaternion.identity, StatusEffectLocation) as GameObject;
+        else
+            // Otherwise update old effect
+            newEffect = search.gameObject;
+        // Update Duration
+        newEffect.GetComponent<StatusEffect>().Initialize(duration);
     }
 }

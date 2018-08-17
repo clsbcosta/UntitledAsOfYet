@@ -11,7 +11,7 @@ public class PlayerController : Character
 
     // Camera Settings
     private Transform head;
-    public Ray lookRay;
+    [HideInInspector]
     public Vector3 lookPoint;
     private Vector3 camLockDirection;
 
@@ -64,11 +64,6 @@ public class PlayerController : Character
     public void OnDrawGizmos()
     {
         Gizmos.color = Color.red; Gizmos.DrawSphere(lookPoint, 0.1f);
-    }
-
-    private void SyncWithServer()
-    {
-
     }
 
     protected override void LoadMyAttributes()

@@ -15,6 +15,7 @@ public static class ClassData
     //      Health, HealthRegen, Mana, ManaRegen,
     //      MagCritChance, MagCritMult, PhysCritChance, PhysCritMult,
     //      MoveSpeed, Armor, PhysResist, MagResist
+    //      MagicDamage, PhysicalDamage
     // Numbers are multipliers (1.2 = 20% stat boost)
     public static IDictionary<PlayableClass, PlayableClassData> PlayableClasses = new Dictionary<PlayableClass, PlayableClassData>()
     {
@@ -23,14 +24,16 @@ public static class ClassData
                 new List<Spell>() { },
                 1, 1, 1, 1,
                 1, 1, 1, 1,
-                1, 1, 1, 1)
+                1, 1, 1, 1,
+                1, 1)
             },
         {
             PlayableClass.Warrior, new PlayableClassData(
                 new List<Spell>() { },
                 1, 1, 1, 1,
                 1, 1, 1, 1,
-                1, 1, 1, 1)
+                1, 1, 1, 1,
+                1, 1)
             }
     };
 
@@ -43,11 +46,12 @@ public struct PlayableClassData
     public IList<Spell> Spells;
     public PlayableClassData(List<Spell> Spells, float Health, float HealthRegen, float Mana, float ManaRegen,
         float MagCritChance, float MagCritMult, float PhysCritChance, float PhysCritMult,
-        float MoveSpeed, float Armor, float PhysResist, float MagResist)
+        float MoveSpeed, float Armor, float PhysResist, float MagResist, float MagicDamage, float PhysicalDamage)
     {
         baseAttributes = new float[]{ Health, HealthRegen, Mana, ManaRegen,
             MagCritChance, MagCritMult, PhysCritChance, PhysCritMult, 
-            MoveSpeed, Armor, PhysResist, MagResist };
+            MoveSpeed, Armor, PhysResist, MagResist,
+            MagicDamage, PhysicalDamage };
         this.Spells = Spells;
     }
 }

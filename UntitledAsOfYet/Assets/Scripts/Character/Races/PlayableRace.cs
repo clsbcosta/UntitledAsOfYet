@@ -14,7 +14,8 @@ public static class RaceData
     //      Spell List,
     //      Health, HealthRegen, Mana, ManaRegen,
     //      MagCritChance, MagCritMult, PhysCritChance, PhysCritMult,
-    //      MoveSpeed, Armor, PhysResist, MagResist
+    //      MoveSpeed, Armor, PhysResist, MagResist,
+    //      MagicDamage, PhysicalDamage
     // Numbers are flat increases
     public static IDictionary<PlayableRace, PlayableRaceData> PlayableRaces = new Dictionary<PlayableRace, PlayableRaceData>()
     {
@@ -23,28 +24,32 @@ public static class RaceData
                 new List<Spell>() { },
                 10, 10, 10, 10,
                 10, 10, 10, 10,
-                10, 10, 10, 10)
+                10, 10, 10, 10,
+                10, 10)
             },
         {
             PlayableRace.Dwarf, new PlayableRaceData(
                 new List<Spell>() { },
                 10, 10, 10, 10,
                 10, 10, 10, 10,
-                10, 10, 10, 10)
+                10, 10, 10, 10,
+                10, 10)
             },
         {
             PlayableRace.Undead, new PlayableRaceData(
                 new List<Spell>() { },
                 10, 10, 10, 10,
                 10, 10, 10, 10,
-                10, 10, 10, 10)
+                10, 10, 10, 10,
+                10, 10)
             },
         {
             PlayableRace.Orc, new PlayableRaceData(
                 new List<Spell>() { },
                 10, 10, 10, 10,
                 10, 10, 10, 10,
-                10, 10, 10, 10)
+                10, 10, 10, 10,
+                10, 10)
             }
     };
 }
@@ -56,11 +61,12 @@ public struct PlayableRaceData
     public IList<Spell> Spells;
     public PlayableRaceData(List<Spell> Spells, float Health, float HealthRegen, float Mana, float ManaRegen,
         float MagCritChance, float MagCritMult, float PhysCritChance, float PhysCritMult,
-        float MoveSpeed, float Armor, float PhysResist, float MagResist)
+        float MoveSpeed, float Armor, float PhysResist, float MagResist, float MagicDamage, float PhysicalDamage)
     {
         baseAttributes = new float[]{ Health, HealthRegen, Mana, ManaRegen,
             MagCritChance, MagCritMult, PhysCritChance, PhysCritMult,
-            MoveSpeed, Armor, PhysResist, MagResist };
+            MoveSpeed, Armor, PhysResist, MagResist,
+            MagicDamage, PhysicalDamage};
         this.Spells = Spells;
     }
 }
