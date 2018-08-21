@@ -16,7 +16,7 @@ public class Character : NetworkBehaviour
     protected float[] baseAttributes; // Character Base Attributes
     protected float[] baseAttribPercMods; // Character Base Perc Mods
     
-    public float[] attributes; // Character Current Attributes
+    public float[] attributes = new float[Enum.GetValues(typeof(AttributeType)).Length]; // Character Current Attributes
     private float[] attribPercMods; // Percent Modifier for each Attribute
     [HideInInspector]
     public List<AttribModifier> attribModifiers = new List<AttribModifier>(); // List of Attribute Modifiers
@@ -28,7 +28,7 @@ public class Character : NetworkBehaviour
     public float mana;
 
     // Look Vectors
-    public Ray lookRay;
+    public Vector3 lookDirection;
 
     // Time keeping
     private float elapsed;
@@ -45,8 +45,11 @@ public class Character : NetworkBehaviour
         myRigidBody = GetComponent<Rigidbody>();
         LoadMyAttributes();
         LoadMySpells();
-        CalculateAttributes();
-        ResetHealthMana();
+        if (isServer)
+        {
+            CalculateAttributes();
+            ResetHealthMana();
+        }
     }
 
     private void Test()
@@ -87,6 +90,18 @@ public class Character : NetworkBehaviour
         }
     }
 
+    // Cast Spell
+    [Command]
+    protected void CmdCastSpell(string spellAsset, Vector3 direction)
+    {
+        if (isServer)
+        {
+            GameObject newSpell = Instantiate(Resources.Load("Spells/" + spellAsset),
+                transform.position, Quaternion.LookRotation(direction)) as GameObject;
+            NetworkServer.Spawn(newSpell);
+        }
+    }
+
     // Recalculate Attributes based on Base Attributes and Attribute Modifiers
     [Server]
     public void CalculateAttributes()
@@ -94,7 +109,7 @@ public class Character : NetworkBehaviour
         attributes = (float[])baseAttributes.Clone();
         attribPercMods = (float[])baseAttribPercMods.Clone();
         // Add flat attribute increases and percentage attribute inceases
-        foreach (AttribModifier attribMod in attribModifiers)
+        foreach (AttribModifier attribMod in attribModifiers) 
         {
             attributes[(int)attribMod.attribute] += attribMod.flatMod;
             attribPercMods[(int)attribMod.attribute] *= 1+attribMod.percMod;
@@ -151,6 +166,7 @@ public class Character : NetworkBehaviour
             health = attributes[(int)AttributeType.Health];
     }
 
+    [Server]
     private void ResetHealthMana()
     {
         health = attributes[(int)AttributeType.Health];

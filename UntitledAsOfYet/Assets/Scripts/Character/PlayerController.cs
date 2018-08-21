@@ -39,6 +39,17 @@ public class PlayerController : Character
         // Check movement keys
         CheckMovementInputs();
         CheckMouseLook();
+
+        // Testing
+        CheckCasts();
+    }
+
+    private void CheckCasts()
+    {
+        if (Input.GetKeyUp("r"))
+            CmdCastSpell("Testing/Explosion", lookDirection);
+        if (Input.GetKeyUp("e"))
+            CmdCastSpell("Testing/Projectile", lookDirection);
     }
 
     private void CheckMovementInputs()
@@ -57,13 +68,8 @@ public class PlayerController : Character
         Ray camRay = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hitInfo;
         lookPoint = Physics.Raycast(camRay, out hitInfo, 100) ? hitInfo.point : camRay.GetPoint(25);
-        lookRay = new Ray(head.position, lookPoint - head.position);
+        lookDirection = lookPoint - head.position;
         Debug.DrawLine(head.position, lookPoint, Color.blue);
-    }
-
-    public void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red; Gizmos.DrawSphere(lookPoint, 0.1f);
     }
 
     protected override void LoadMyAttributes()
