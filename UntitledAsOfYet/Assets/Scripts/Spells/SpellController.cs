@@ -5,7 +5,7 @@ using UnityEngine.Networking;
 
 public class SpellController : NetworkBehaviour {
     public List<GameObject> spellStages;
-    private int currentStage = 0;
+    public int currentStage = 0;
 
     [Server]
     public void TriggerNextStage()
@@ -29,6 +29,17 @@ public class SpellController : NetworkBehaviour {
             currentStage++;
             spellStages[currentStage].SetActive(true);
         }
+    }
+
+    [ClientRpc]
+    public void RpcSetCurrentStage(int stage)
+    {
+        currentStage = stage;
+        foreach (GameObject currStage in spellStages)
+        {
+            currStage.SetActive(false);
+        }
+        spellStages[stage].SetActive(true);
     }
 
     [ClientRpc]

@@ -62,7 +62,9 @@
      <Compile Include="Assets\Scripts\Character\Races\PlayableRace.cs" />
      <Compile Include="Assets\Scripts\DamageType.cs" />
      <Compile Include="Assets\Scripts\Spells\Basic\AoE.cs" />
+     <Compile Include="Assets\Scripts\Spells\Basic\Multiply.cs" />
      <Compile Include="Assets\Scripts\Spells\Basic\Projectile.cs" />
+     <Compile Include="Assets\Scripts\Spells\Basic\Zone.cs" />
      <Compile Include="Assets\Scripts\Spells\SpellController.cs" />
      <Compile Include="Assets\Scripts\Spells\SpellStage.cs" />
      <Compile Include="Assets\Scripts\StatusEffects\StatusEffect.cs" />

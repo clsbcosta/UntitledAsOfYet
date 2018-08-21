@@ -46,10 +46,12 @@ public class PlayerController : Character
 
     private void CheckCasts()
     {
-        if (Input.GetKeyUp("r"))
-            CmdCastSpell("Testing/Explosion", lookDirection);
-        if (Input.GetKeyUp("e"))
+        if (Input.GetKeyUp("1"))
             CmdCastSpell("Testing/Projectile", lookDirection);
+        if (Input.GetKeyUp("2"))
+            CmdCastSpell("Testing/Explosion", lookDirection);
+        if (Input.GetKeyUp("3"))
+            CmdCastSpell("Testing/Multiply", lookDirection);
     }
 
     private void CheckMovementInputs()
