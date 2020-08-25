@@ -5,5 +5,5 @@ using UnityEngine;
 public enum DamageType
 {
     Heal, UnBlockable,
-    Physical, Magical,
+    Physical
 }
